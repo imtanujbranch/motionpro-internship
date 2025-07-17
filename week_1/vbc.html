@@ -1,9 +1,97 @@
 <!DOCTYPE html>
-<html>
 <head>
-	<title>Business Card</title>
+    <title>Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lexend+Mega:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+			font-family: Arial, 'sans-serif' ;
+			background-color: #fdfd96 ;
+			line-height: 1.6 ;
+			margin: 0;
+			padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .part {
+            display: flex;
+            flex-direction: row;
+        }
+        .right>img {
+            width: 120px;
+            height: 125px;
+            padding: 8px 2px 2px 2px;
+            border-radius: 160px;
+        }
+        .card {
+            margin: 20px ;
+            padding: 12px;
+            border: solid 2px ;
+            border-radius: 5px;
+            max-width: 500px;
+            background-color: whitesmoke;
+			box-shadow: salmon 8px 12px 12px 12px ;
+        }
+        .name {
+			font-family: 'Red Hat Text', Arial, Helvetica, sans-serif;
+            padding:2px 12px 12px 25px;
+            margin-bottom: 0;
+			color: #e3a018 ;
+        }
+        .left {
+            width: 260px ;
+            margin-right: 12px ;
+            height: 150px;
+            padding: 12px 12px 1px 45px;
+        }
+        .left a {
+            text-decoration: none;
+			color: rgb(121, 105, 105) ;
+        }
+        .left a:hover {
+			color: rgb(43, 43, 11) ;;
+        }
+		a:focus {
+			color: rgb(123, 177, 41);
+		}
+
+		a:active{
+			color: rgb(78, 120, 14);
+
+		}
+        .left ul {
+            list-style-type: none ;
+            padding: 0px ;
+            margin: 0px;
+        }
+        .right {
+            height: 163px;
+            max-width: 300px;
+        }
+    </style>
 </head>
 <body>
-
+    <div class="card">
+        <h1 class="name">Tanuj Singh Khati</h1>
+        <div class="part">
+            <div class="left">
+                <ul>
+                    <li><i class="fa-solid fa-phone"></i> <a href="#">+91 8523423141</a></li>
+                    <li title="click to open my linkedin"><i class="fa-brands fa-linkedin-in"></i> <a href="https://dub.sh/MlbZ4xp" target="_blank">https://linkedin.com</a></li>
+                    <li title="click to open my github"><i class="fa-brands fa-github"></i> <a href="https://git.new/R9UEloF" target="_blank" >https://github.com</a></li>
+                    <li title="click to open my instagram"><i class="fa-brands fa-instagram"></i> <a href="https://instagram.com" target="_blank">https://instagram.com</a></li>
+                    <li title="click to open mail"><i class="fa-regular fa-envelope"></i> <a href="mailto:khati6893@gmail.com" target="_blank">khati6893@gmail.com</a></li>
+                </ul>
+            </div>
+            <div class="right">
+                <img src="./batman.jpeg" alt="pf">
+            </div>
+        </div>
+    </div>
+	
 </body>
 </html>
