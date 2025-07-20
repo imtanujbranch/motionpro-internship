@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Bucket List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        /*
+        .main-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        */
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        
+        .bucket-items {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .bucket-item {
+            background: #fff;
+            border: 2px solid #eee;
+            padding: 18px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .bucket-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            border-color: #ddd;
+        }
+        
+        .item-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 30px;
+        }
+        
+        .item-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        /* Completed items styling */
+        .completed {
+            background: #f8fff8;
+            border-color: #d4edda;
+            opacity: 0.8;
+        }
+        
+        .completed .item-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+        
+        .completed:hover {
+            transform: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+/*
+        @media screen and (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .bucket-item {
+                padding: 15px;
+            }
+        }
+        
+
+        .bucket-item:focus {
+            outline: 2px solid #007acc;
+            outline-offset: 2px;
+        }*/
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <h1>My Bucket List</h1>
+        <p class="subtitle">Things I want to do before I graduate</p>
+        
+        <ul class="bucket-items">
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">✈️</span>
+                <span class="item-text">Visit Japan during Cherry Blossom season</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">🏄‍♀️</span>
+                <span class="item-text">Want to travel to Goa Beach</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">🌌</span>
+                <span class="item-text">Visit to Antartica</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">📚</span>
+                <span class="item-text">Read 1000 books</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">🎸</span>
+                <span class="item-text">Learn Music</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">💻</span>
+                <span class="item-text">Build my own Computer</span>
+            </li>
+            
+            <li class="bucket-item" tabindex="0">
+                <span class="item-icon">🎓</span>
+                <span class="item-text">Get a good placement</span>
+            </li>
+            
+            <!-- Already done these! -->
+            <li class="bucket-item completed">
+                <span class="item-icon">✅</span>
+                <span class="item-text">Run a half-marathon</span>
+            </li>
+            
+            <li class="bucket-item completed">
+                <span class="item-icon">✅</span>
+                <span class="item-text">Go scuba diving</span>
+            </li>
+            
+            <li class="bucket-item completed">
+                <span class="item-icon">✅</span>
+                <span class="item-text">Learn to cook something other than ramen</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
