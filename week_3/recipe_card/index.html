@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Recipe Cards</title>
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #45b7d1;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.2);
+            --border-radius: 12px;
+            --spacing: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: var(--spacing);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing);
+            padding: var(--spacing) 0;
+        }
+
+        .recipe-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-card:hover .recipe-image {
+            transform: scale(1.05);
+        }
+
+        .recipe-content {
+            padding: var(--spacing);
+        }
+
+        .recipe-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .recipe-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .cuisine-tag {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 5px;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .ingredients-section,
+        .preparation-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .ingredients-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ingredients-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .ingredients-list li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .preparation-steps {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .toggle-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .recipe-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .filter-section {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .recipe-content {
+                padding: 15px;
+            }
+
+            .recipe-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .recipe-card {
+                margin-bottom: 10px;
+            }
+
+            .recipe-content {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Delicious Recipe Collection</h1>
+            <p>Discover amazing recipes from around the world</p>
+        </header>
+
+        <section class="filter-section" aria-label="Recipe cuisine filters">
+            <button class="filter-btn active" data-cuisine="all" aria-pressed="true" aria-label="Show all cuisine recipes">All Cuisines</button>
+            <button class="filter-btn" data-cuisine="Italian" aria-pressed="false" aria-label="Filter Italian recipes">Italian</button>
+            <button class="filter-btn" data-cuisine="Mexican" aria-pressed="false" aria-label="Filter Mexican recipes">Mexican</button>
+            <button class="filter-btn" data-cuisine="Asian" aria-pressed="false" aria-label="Filter Asian recipes">Asian</button>
+            <button class="filter-btn" data-cuisine="American" aria-pressed="false" aria-label="Filter American recipes">American</button>
+            <button class="filter-btn" data-cuisine="Mediterranean" aria-pressed="false" aria-label="Filter Mediterranean recipes">Mediterranean</button>
+        </section>
+
+        <main class="recipe-grid" role="main" aria-label="Recipe collection">
+            <article class="recipe-card" data-cuisine="Italian" role="article">
+                <img src="2.jpg" alt="Fresh Caprese salad with sliced tomatoes, mozzarella, and basil leaves drizzled with olive oil" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Classic Caprese Salad</h2>
+                    <span class="cuisine-tag">Italian</span>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-text">(4.8/5)</span>
+                    </div>
+                    <p class="recipe-description">Fresh mozzarella, ripe tomatoes, and basil drizzled with olive oil and balsamic. Simple Italian perfection.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>4 large ripe tomatoes, sliced</li>
+                            <li>300g fresh mozzarella, sliced</li>
+                            <li>Fresh basil leaves</li>
+                            <li>3 tbsp extra virgin olive oil</li>
+                            <li>2 tbsp balsamic vinegar</li>
+                            <li>Salt and pepper to taste</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Arrange tomato and mozzarella slices alternately on a platter. 2. Tuck basil leaves between slices. 3. Drizzle with olive oil and balsamic vinegar. 4. Season with salt and pepper. 5. Let stand 15 minutes before serving. 6. Serve with crusty bread.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Classic Caprese Salad">Show Full Recipe</button>
+                </div>
+            </article>
+
+            <article class="recipe-card" data-cuisine="Mexican" role="article">
+                <img src="3.jpg" alt="Colorful black bean veggie tacos with fresh vegetables and avocado in soft tortillas" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Black Bean Veggie Tacos</h2>
+                    <span class="cuisine-tag">Mexican</span>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-text">(4.5/5)</span>
+                    </div>
+                    <p class="recipe-description">Hearty black beans with fresh vegetables in soft tortillas. A delicious and nutritious vegetarian meal.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>2 cans black beans, drained</li>
+                            <li>8 soft tortillas</li>
+                            <li>1 onion, diced</li>
+                            <li>2 cloves garlic, minced</li>
+                            <li>1 tsp cumin</li>
+                            <li>1 tsp chili powder</li>
+                            <li>Lettuce, tomatoes, avocado for serving</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Sauté onion and garlic until soft. 2. Add black beans and spices, cook 5 minutes. 3. Warm tortillas in dry pan. 4. Fill tortillas with bean mixture. 5. Top with lettuce, tomatoes, and avocado. 6. Serve immediately with lime wedges.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Black Bean Veggie Tacos">Show Full Recipe</button>
+                </div>
+            </article>
+
+            <article class="recipe-card" data-cuisine="Asian" role="article">
+                <img src="4.jpg" alt="Vibrant vegetable stir fry bowl with colorful mixed vegetables over steamed rice" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Vegetable Stir Fry Bowl</h2>
+                    <span class="cuisine-tag">Asian</span>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-text">(4.7/5)</span>
+                    </div>
+                    <p class="recipe-description">Fresh mixed vegetables stir-fried in savory sauce served over steamed rice. Colorful and nutritious.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>2 cups mixed vegetables (broccoli, carrots, bell peppers)</li>
+                            <li>3 tbsp soy sauce</li>
+                            <li>2 tbsp sesame oil</li>
+                            <li>1 tbsp ginger, minced</li>
+                            <li>2 cloves garlic, minced</li>
+                            <li>2 cups cooked rice</li>
+                            <li>Green onions for garnish</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Heat oil in wok over high heat. 2. Add garlic and ginger, stir-fry 30 seconds. 3. Add vegetables and stir-fry 3-4 minutes. 4. Add soy sauce and toss to coat. 5. Serve over rice and garnish with green onions. 6. Sprinkle with sesame seeds if desired.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Vegetable Stir Fry Bowl">Show Full Recipe</button>
+                </div>
+            </article>
+
+            <article class="recipe-card" data-cuisine="American" role="article">
+                <img src="5.jpg" alt="Delicious plant-based veggie burger with black bean patty, fresh lettuce, tomato, and onion" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Plant-Based Veggie Burger</h2>
+                    <span class="cuisine-tag">American</span>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-text">(4.3/5)</span>
+                    </div>
+                    <p class="recipe-description">Hearty veggie patty made with black beans and vegetables on a toasted bun. Healthy comfort food.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>1 can black beans, mashed</li>
+                            <li>1 cup breadcrumbs</li>
+                            <li>1 egg</li>
+                            <li>4 hamburger buns</li>
+                            <li>Lettuce leaves</li>
+                            <li>2 tomatoes, sliced</li>
+                            <li>1 onion, sliced</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Mix mashed beans, breadcrumbs, and egg to form patties. 2. Pan-fry patties 4-5 minutes per side. 3. Toast buns lightly. 4. Assemble burgers with lettuce, tomato, and onion. 5. Add your favorite condiments. 6. Serve with baked sweet potato fries.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Plant-Based Veggie Burger">Show Full Recipe</button>
+                </div>
+            </article>
+
+            <article class="recipe-card" data-cuisine="Italian" role="article">
+                <img src="1.jpg" alt="Delicious Margherita pizza with fresh basil, mozzarella cheese, and tomato sauce on golden crust" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Margherita Pizza</h2>
+                    <span class="cuisine-tag">Italian</span>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-text">(4.9/5)</span>
+                    </div>
+                    <p class="recipe-description">Classic Neapolitan pizza with fresh mozzarella, basil, and tomato sauce. Simple perfection.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>Pizza dough (homemade or store-bought)</li>
+                            <li>200ml tomato sauce</li>
+                            <li>200g fresh mozzarella</li>
+                            <li>Fresh basil leaves</li>
+                            <li>2 tbsp olive oil</li>
+                            <li>Salt to taste</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Preheat oven to 250°C. 2. Roll out pizza dough on floured surface. 3. Spread tomato sauce evenly. 4. Add torn mozzarella pieces. 5. Bake 10-12 minutes until crust is golden. 6. Top with fresh basil and drizzle with olive oil.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Margherita Pizza">Show Full Recipe</button>
+                </div>
+            </article>
+
+            <article class="recipe-card" data-cuisine="Mediterranean" role="article">
+                <img src="6.jpg" alt="Traditional Greek salad with fresh vegetables, feta cheese, Kalamata olives, and herbs" class="recipe-image">
+                <div class="recipe-content">
+                    <h2 class="recipe-title">Fresh Greek Salad</h2>
+                    <span class="cuisine-tag">Mediterranean</span>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-text">(4.4/5)</span>
+                    </div>
+                    <p class="recipe-description">Fresh vegetables with feta cheese and olives dressed in olive oil and herbs. A Mediterranean classic.</p>
+                    
+                    <div class="ingredients-section">
+                        <h3 class="section-title">Ingredients</h3>
+                        <ul class="ingredients-list">
+                            <li>2 large cucumbers, diced</li>
+                            <li>4 ripe tomatoes, chopped</li>
+                            <li>1 red onion, thinly sliced</li>
+                            <li>200g feta cheese, cubed</li>
+                            <li>1 cup Kalamata olives</li>
+                            <li>4 tbsp olive oil</li>
+                            <li>2 tbsp red wine vinegar</li>
+                            <li>1 tsp dried oregano</li>
+                        </ul>
+                    </div>
+
+                    <div class="preparation-section hidden">
+                        <h3 class="section-title">Preparation</h3>
+                        <p class="preparation-steps">1. Combine cucumbers, tomatoes, and onion in large bowl. 2. Add feta cheese and olives. 3. Whisk together olive oil, vinegar, and oregano. 4. Pour dressing over salad and toss gently. 5. Let stand 10 minutes for flavors to meld. 6. Serve with warm pita bread.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleRecipe(this)" aria-expanded="false" aria-label="Show full recipe for Fresh Greek Salad">Show Full Recipe</button>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script>
+        function toggleRecipe(button) {
+            const card = button.closest('.recipe-card');
+            const preparationSection = card.querySelector('.preparation-section');
+            
+            if (preparationSection.classList.contains('hidden')) {
+                preparationSection.classList.remove('hidden');
+                button.textContent = 'Show Less';
+                button.setAttribute('aria-expanded', 'true');
+            } else {
+                preparationSection.classList.add('hidden');
+                button.textContent = 'Show Full Recipe';
+                button.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        function filterRecipes() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.recipe-card');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update ARIA states
+                    buttons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+                    button.classList.add('active');
+                    button.setAttribute('aria-pressed', 'true');
+
+                    const cuisine = button.getAttribute('data-cuisine');
+
+                    cards.forEach(card => {
+                        if (cuisine === 'all' || card.getAttribute('data-cuisine') === cuisine) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', filterRecipes);
+    </script>
+</body>
+</html>
